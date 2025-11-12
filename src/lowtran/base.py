@@ -9,6 +9,7 @@ import sysconfig
 import os
 from types import ModuleType
 
+
 def check() -> ModuleType:
     """Ensure the compiled lowtran7 extension is available.
 

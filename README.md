@@ -21,7 +21,7 @@ See below for how to make these examples.
 
 Lowtran requires a Fortran compiler and CMake.
 We use `f2py` (part of `numpy`) to seamlessly use Fortran libraries from Python by special compilation of the Fortran library with auto-generated shim code.
-Make sure meson is available on the system.
+Make sure `meson` and the python devel headers & libraries are available on your system.
 
 If a Fortran compiler is not already installed, install Gfortran:
 

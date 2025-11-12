@@ -48,6 +48,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     
+    - run: pip install --upgrade setuptools
     - run: pip install meson
 
     - run: pip install .[tests,lint]

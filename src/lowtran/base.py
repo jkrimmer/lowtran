@@ -5,7 +5,7 @@ import numpy as np
 from typing import Any
 from pathlib import Path
 import importlib.util
-import distutils.sysconfig
+import sysconfig
 import os
 from types import ModuleType
 
@@ -36,7 +36,7 @@ def import_f2py_mod(name: str) -> ModuleType:
         else:
             logging.info(f"Could not find {dll_path} to add to DLL search path")
 
-    mod_name = name + distutils.sysconfig.get_config_var("EXT_SUFFIX")  # type: ignore
+    mod_name = name + sysconfig.get_config_var("EXT_SUFFIX")  # type: ignore
     mod_file = Path(__file__).parent / mod_name
     if not mod_file.is_file():
         raise ModuleNotFoundError(mod_file)

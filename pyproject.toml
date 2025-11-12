@@ -21,7 +21,6 @@ classifiers = [
   "Programming Language :: Fortran",
   "Topic :: Scientific/Engineering :: Atmospheric Science"
 ]
-dynamic = ["readme"]
 requires-python = ">=3.9"
 dependencies = ["numpy", "xarray", "python-dateutil"]
 

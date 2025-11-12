@@ -24,6 +24,7 @@ on:
       - "**.f90"
       - "**.py"
       - ".github/workflows/ci.yml"
+      - "pyproject.toml"
 
 
 jobs:

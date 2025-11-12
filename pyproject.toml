@@ -3,7 +3,7 @@ requires = [
   "scikit-build-core>=0.9.0",
   "numpy",
   "cmake>=3.24",
-  "ninja"
+  "meson"
 ]
 build-backend = "scikit_build_core.build"
 

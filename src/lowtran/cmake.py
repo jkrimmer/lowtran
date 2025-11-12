@@ -3,7 +3,6 @@ import shutil
 from pathlib import Path
 import os
 import logging
-import sys
 
 __all__ = ["build"]
 

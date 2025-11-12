@@ -3,6 +3,11 @@ cmake_minimum_required(VERSION 3.19...3.26)
 
 project(lowtran LANGUAGES Fortran)
 
+set(Python3_FIND_VIRTUALENV FIRST)
+find_package(Python3 COMPONENTS Interpreter NumPy REQUIRED)
+message(STATUS "${PYTHON3_EXECUTABLE}")
+message(STATUS "${Python3_NumPy_VERSION}")
+
 enable_testing()
 
 include(cmake/options.cmake)

@@ -9,18 +9,20 @@ import sysconfig
 import os
 from types import ModuleType
 
-from .cmake import build
-
-
 def check() -> ModuleType:
-    try:
-        lowtran7 = import_f2py_mod("lowtran7")
-    except ImportError:
-        src = Path(__file__).parent
-        build(source_dir=src, build_dir=src / "build")
-        lowtran7 = import_f2py_mod("lowtran7")
+    """Ensure the compiled lowtran7 extension is available.
 
-    return lowtran7
+    With scikit-build-core, the extension is built at install time and shipped in the wheel.
+    If it's missing, prompt the user to install the package (e.g., `pip install .`).
+    """
+
+    try:
+        return import_f2py_mod("lowtran7")
+    except ImportError as e:
+        raise ImportError(
+            "lowtran7 extension not found. Please install the package so the Fortran "
+            "extension is built (e.g., `pip install .` or `pip install lowtran`)."
+        ) from e
 
 
 def import_f2py_mod(name: str) -> ModuleType:

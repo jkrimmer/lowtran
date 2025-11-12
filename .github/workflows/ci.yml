@@ -59,6 +59,7 @@ jobs:
 
     - run: pytest
 
+    - run: pip install meson # required for cmake tests
     - run: cmake --workflow --preset default
 
   windows:
@@ -92,6 +93,7 @@ jobs:
 
     - run: pytest -v
 
+    - run: pip install meson # required for cmake tests
     - run: cmake -B build
       env:
         CMAKE_GENERATOR: "MinGW Makefiles"

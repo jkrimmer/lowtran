@@ -24,7 +24,8 @@ def build(source_dir: Path, build_dir: Path) -> None:
             gen = "Unix Makefiles"
 
     # %% Configure
-    cmd = [cmake, f"-B{build_dir}", f"-S{source_dir}", f"-G{gen}", f"-DPython_EXECUTABLE={sys.executable}"]
+    cmd = [cmake, f"-B{build_dir}", f"-S{source_dir}", f"-G{gen}", 
+           f"-DPython_EXECUTABLE={sys.executable}"]
     logging.info(" ".join(cmd))
     subprocess.check_call(cmd)
     # %% Build

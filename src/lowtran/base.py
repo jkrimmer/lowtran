@@ -3,7 +3,6 @@ import logging
 import xarray
 import numpy as np
 from typing import Any
-from pathlib import Path
 import importlib
 import sysconfig
 import os
@@ -33,18 +32,18 @@ def import_f2py_mod(name: str) -> ModuleType:
 
     if not lib_path.is_file():
         raise ModuleNotFoundError(f"Module not found: {lib_path}")
-    
+
     # On Windows, add DLL search directories to fix loading issues
     dll_dirs = []
     if sys.platform == "win32" and hasattr(os, 'add_dll_directory'):
         # Add common locations where your dependencies might be, i.e., system PATH and module dir
         search_paths = os.environ.get('PATH', '').split(os.pathsep)
         search_paths.append(os.fspath(lib_path.parent))
-        
+
         for path in search_paths:
             try:
                 dll_dirs.append(os.add_dll_directory(path))
-            except (OSError, FileNotFoundError):
+            except OSError:
                 pass
     try:
         # Load the module from file path

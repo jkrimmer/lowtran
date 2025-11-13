@@ -5,7 +5,7 @@ function(f2py_target module_name module_src out_dir)
 
 set(f2py_bin ${CMAKE_CURRENT_BINARY_DIR}/${module_name}${f2py_suffix})
 
-set(f2py_arg -m ${module_name} -c ${module_src})
+set(f2py_arg -m ${module_name} -c ${module_src} --backend meson)
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
   if(WIN32)
     list(APPEND f2py_arg --fcompiler=intelvem)

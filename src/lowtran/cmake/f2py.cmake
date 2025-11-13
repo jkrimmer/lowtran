@@ -25,19 +25,6 @@ OUTPUT_VARIABLE out
 ERROR_VARIABLE err
 )
 
-if(NOT ret EQUAL 0)
-
-message(VERBOSE "${ret}: ${out}: ${err}")
-
-execute_process(
-COMMAND ${Python3_EXECUTABLE} -c "import distutils.sysconfig; x=distutils.sysconfig.get_config_var('EXT_SUFFIX'); assert x is not None; print(x)"
-OUTPUT_STRIP_TRAILING_WHITESPACE
-RESULT_VARIABLE ret
-OUTPUT_VARIABLE out
-ERROR_VARIABLE err
-)
-
-endif()
 
 if(NOT ret EQUAL 0)
   message(FATAL_ERROR "${ret}: ${out}: ${err}: could not determine f2py output file suffix")

@@ -18,7 +18,7 @@ if(f2py_suffix)
 endif()
 
 execute_process(
-COMMAND ${Python_EXECUTABLE} -c "import sysconfig; x=sysconfig.get_config_var('EXT_SUFFIX'); assert x is not None; print(x)"
+COMMAND ${Python3_EXECUTABLE} -c "import sysconfig; x=sysconfig.get_config_var('EXT_SUFFIX'); assert x is not None; print(x)"
 OUTPUT_STRIP_TRAILING_WHITESPACE
 RESULT_VARIABLE ret
 OUTPUT_VARIABLE out
@@ -30,7 +30,7 @@ if(NOT ret EQUAL 0)
 message(VERBOSE "${ret}: ${out}: ${err}")
 
 execute_process(
-COMMAND ${Python_EXECUTABLE} -c "import distutils.sysconfig; x=distutils.sysconfig.get_config_var('EXT_SUFFIX'); assert x is not None; print(x)"
+COMMAND ${Python3_EXECUTABLE} -c "import distutils.sysconfig; x=distutils.sysconfig.get_config_var('EXT_SUFFIX'); assert x is not None; print(x)"
 OUTPUT_STRIP_TRAILING_WHITESPACE
 RESULT_VARIABLE ret
 OUTPUT_VARIABLE out

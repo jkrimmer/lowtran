@@ -1,10 +1,13 @@
 # f2py
 
-find_package(Python COMPONENTS Interpreter NumPy REQUIRED)
+set(Python3_FIND_VIRTUALENV FIRST)
+find_package(Python3 COMPONENTS Interpreter NumPy REQUIRED)
+message(STATUS "${PYTHON3_EXECUTABLE}")
+message(STATUS "${Python3_NumPy_VERSION}")
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU" AND
-   CMAKE_Fortran_COMPILER_VERSION VERSION_GREATER_EQUAL 10 AND
-   Python_NumPy_VERSION VERSION_LESS 1.19)
+  CMAKE_Fortran_COMPILER_VERSION VERSION_GREATER_EQUAL 10 AND
+  Python3_NumPy_VERSION VERSION_LESS 1.19)
   message(FATAL_ERROR "Numpy >= 1.19 required for GCC >= 10")
 endif()
 

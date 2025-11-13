@@ -34,7 +34,7 @@ def import_f2py_mod(name: str) -> ModuleType:
         raise ModuleNotFoundError(f"Module not found: {lib_path}")
 
     # On Windows, add DLL search directories to fix loading issues
-    dll_dirs = []
+    dll_dirs: list[Any] = []
     if sys.platform == "win32" and hasattr(os, 'add_dll_directory'):
         # Add common locations where your dependencies might be, i.e., system PATH and module dir
         search_paths = os.environ.get('PATH', '').split(os.pathsep)

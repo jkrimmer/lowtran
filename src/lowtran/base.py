@@ -7,6 +7,7 @@ import importlib
 import sysconfig
 import os
 import sys
+from pathlib import Path
 from types import ModuleType
 
 
@@ -29,6 +30,20 @@ def check() -> ModuleType:
 def import_f2py_mod(name: str) -> ModuleType:
     lib_name = name + sysconfig.get_config_var("EXT_SUFFIX")
     lib_path = importlib.resources.files(__package__) / lib_name
+
+    if not lib_path.is_file():
+        # Assume editable install: navigate up to find the build directory
+        src_dir = Path(__file__).parent
+        project_root = src_dir.parent.parent  # Assuming src/lowtran structure
+
+        # scikit-build-core build directory pattern
+        build_base = project_root / "build"
+
+        if build_base.exists():
+            # Recursively search for the library file
+            matches = list(build_base.rglob(lib_name))
+            if matches:
+                lib_path = matches[0]  # Use the first match
 
     if not lib_path.is_file():
         raise ModuleNotFoundError(f"Module not found: {lib_path}")

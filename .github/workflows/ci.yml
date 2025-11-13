@@ -41,7 +41,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     env:
-      FC: gfortran-14
+      FC: gfortran
 
     steps:
     - uses: actions/checkout@v4
@@ -49,6 +49,12 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - uses: fortran-lang/setup-fortran@v1
+      id: setup-fortran
+      with:
+        compiler: gcc
+        version: 14
+    
     - run: pip install .[tests,lint]
 
     - run: flake8

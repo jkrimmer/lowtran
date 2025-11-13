@@ -2,7 +2,6 @@
 requires = [
   "scikit-build-core>=0.9.0",
   "numpy",
-  "cmake>=3.24",
   "meson"
 ]
 build-backend = "scikit_build_core.build"
@@ -42,6 +41,8 @@ ignore_missing_imports = true
 
 # scikit-build-core configuration: out-of-source build and package discovery
 [tool.scikit-build]
+cmake.args = ["-GNinja"]
+editable.mode = "redirect"
 build-dir = "build/{wheel_tag}"
 wheel.packages = ["src/lowtran"]
 sdist.include = ["src/lowtran", "README.md", "LICENSE.txt", "MANIFEST.in"]

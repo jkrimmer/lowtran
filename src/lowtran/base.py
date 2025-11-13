@@ -4,9 +4,10 @@ import xarray
 import numpy as np
 from typing import Any
 from pathlib import Path
-import importlib.util
+import importlib
 import sysconfig
 import os
+import sys
 from types import ModuleType
 
 
@@ -27,31 +28,37 @@ def check() -> ModuleType:
 
 
 def import_f2py_mod(name: str) -> ModuleType:
+    lib_name = name + sysconfig.get_config_var("EXT_SUFFIX")
+    lib_path = importlib.resources.files(__package__) / lib_name
 
-    if os.name == "nt":
-        # https://github.com/space-physics/lowtran/issues/19
-        # code inspired by scipy._distributor_init.py for loading DLLs on Window
-        dll_path = (Path(__file__) / "../build/lowtran7/.libs").resolve()
-        if dll_path.is_dir():
-            # add the folder for Python 3.8 and above
-            logging.info(f"Adding {dll_path} to DLL search path")
-            os.add_dll_directory(dll_path)  # type: ignore
-        else:
-            logging.info(f"Could not find {dll_path} to add to DLL search path")
+    if not lib_path.is_file():
+        raise ModuleNotFoundError(f"Module not found: {lib_path}")
+    
+    # On Windows, add DLL search directories to fix loading issues
+    dll_dirs = []
+    if sys.platform == "win32" and hasattr(os, 'add_dll_directory'):
+        # Add common locations where your dependencies might be, i.e., system PATH and module dir
+        search_paths = os.environ.get('PATH', '').split(os.pathsep)
+        search_paths.append(os.fspath(lib_path.parent))
+        
+        for path in search_paths:
+            try:
+                dll_dirs.append(os.add_dll_directory(path))
+            except (OSError, FileNotFoundError):
+                pass
+    try:
+        # Load the module from file path
+        spec = importlib.util.spec_from_file_location(name, lib_path)
+        if spec is None or spec.loader is None:
+            raise ImportError(f"Cannot load module from {lib_path}")
 
-    mod_name = name + sysconfig.get_config_var("EXT_SUFFIX")  # type: ignore
-    mod_file = Path(__file__).parent / mod_name
-    if not mod_file.is_file():
-        raise ModuleNotFoundError(mod_file)
-    spec = importlib.util.spec_from_file_location(name, mod_file)
-    if spec is None:
-        raise ModuleNotFoundError(f"{name} not found in {mod_file}")
-    mod = importlib.util.module_from_spec(spec)
-    if mod is None:
-        raise ImportError(f"could not import {name} from {mod_file}")
-    spec.loader.exec_module(mod)  # type: ignore
-
-    return mod
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
+    finally:
+        # Clean up DLL directories
+        for dll_dir in dll_dirs:
+            dll_dir.close()
 
 
 def nm2lt7(short_nm: float, long_nm: float, step_cminv: float = 20) -> tuple[float, float, float]:

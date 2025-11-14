@@ -25,3 +25,7 @@ venv/
 rules.ninja
 .ninja_log
 .ninja_deps
+
+# OS specific files
+.DS_Store
+Thumbs.db

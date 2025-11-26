@@ -75,7 +75,7 @@ Here's what's you'll need:
 ## Notes
 
 LOWTRAN7
-[User manual](http://www.dtic.mil/dtic/tr/fulltext/u2/a206773.pdf)
+[User manual](https://apps.dtic.mil/sti/pdfs/ADA206773.pdf)
 Refer to this to understand what parameters are set to default.
 Currently I don't have any aerosols enabled for example, though it's possible to add them into the code.
 

@@ -8,7 +8,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "lowtran"
-version = "3.1.0"
+version = "3.2.0"
 description = " Model of Earth atmosphere absorption and transmission vs. wavelength and location."
 keywords = ["mesosphere", "stratosphere", "thermosphere", "atmosphere"]
 classifiers = [

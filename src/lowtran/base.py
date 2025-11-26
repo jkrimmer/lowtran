@@ -4,6 +4,7 @@ import xarray
 import numpy as np
 from typing import Any
 import importlib
+import importlib.util
 import sysconfig
 import os
 import sys
@@ -149,7 +150,8 @@ def golowtran(c1: dict[str, Any]):
     # %% default parameters
     c1.setdefault("time", None)
 
-    defp = ("h1", "h2", "angle", "im", "iseasn", "ird1", "range_km", "zmdl", "p", "t")
+    defp = ("h1", "h2", "angle", "im", "ihaze", "iseasn", "ivulcn", "icstl", "icld",
+            "ird1", "range_km", "zmdl", "p", "t")
     for p in defp:
         c1.setdefault(p, 0)
 
@@ -184,7 +186,11 @@ def golowtran(c1: dict[str, Any]):
         c1["itype"],
         c1["iemsct"],
         c1["im"],
+        c1["ihaze"],
         c1["iseasn"],
+        c1["ivulcn"],
+        c1["icstl"],
+        c1["icld"],
         c1["ird1"],
         c1["zmdl"],
         c1["p"],

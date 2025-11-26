@@ -74,10 +74,50 @@ Here's what's you'll need:
 
 ## Notes
 
+### Card2 Aerosol Parameters
+
+This implementation now supports Card2 parameters for configuring aerosol scattering and atmospheric conditions:
+
+* **ihaze** (0-10): Aerosol model type
+  * 0: No aerosol attenuation
+  * 1: Rural, visibility 23 km
+  * 2: Rural, visibility 5 km
+  * 3: Maritime (visibility set by icstl)
+  * 4: Maritime, visibility 23 km
+  * 5: Urban, visibility 5 km
+  * 6: Tropospheric, visibility 50 km
+  * 8: Fog, visibility 0.2 km
+  * 9: Fog, visibility 0.5 km
+  * 10: Desert (visibility from wind speed)
+
+* **iseasn** (0-2): Seasonal aerosol profile (2-30 km altitude)
+  * 0: Same as model
+  * 1: Spring-Summer
+  * 2: Fall-Winter
+
+* **ivulcn** (0-8): Volcanic aerosol profile and extinction
+  * 0,1: Background stratospheric
+  * 2: Moderate volcanic profile, Aged volcanic extinction
+  * 3: High volcanic profile, Fresh volcanic extinction
+  * 4: High volcanic profile, Aged volcanic extinction
+  * 5: Moderate volcanic profile, Fresh volcanic extinction
+  * 6: Moderate volcanic profile, Background strato extinction
+  * 7: High volcanic profile, Background strato extinction
+  * 8: Extreme volcanic profile, Fresh volcanic extinction
+
+* **icstl** (1-10): Air mass character (only used with ihaze=3)
+  * 1: Open ocean
+  * 10: Strong continental influence
+
+* **icld** (0-20): Cloud and rain models
+
+See example/AerosolComparison.py for usage examples.
+
+### LOWTRAN7 Documentation
+
 LOWTRAN7
 [User manual](https://apps.dtic.mil/sti/pdfs/ADA206773.pdf)
 Refer to this to understand what parameters are set to default.
-Currently I don't have any aerosols enabled for example, though it's possible to add them into the code.
 
 Right now a lot of configuration features aren't implemented, please request those you want.
 

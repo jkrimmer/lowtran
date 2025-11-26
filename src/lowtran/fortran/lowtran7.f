@@ -10,6 +10,7 @@
       Integer,Intent(in) :: nwl,MODELPy,ITYPEPy,IEMSCTPy,IMpy
       Integer,Intent(in) :: IHAZEPy,ISEASNpy,IVULCNPy,ICSTLPy,ICLDPy
       Integer,Intent(in) :: MLpy,IRD1py
+!f2py intent(hide) :: MLpy
       real,intent(in) :: ZMDLpy(mlpy),Ppy(mlpy),Tpy(mlpy),WMOLpy(12)
       Real, Intent(in)  :: V1Py,V2Py,DVPy,H1Py,H2Py,ANGLEPy,RangePy
       Real, Intent(Out) :: TXPy(nwl,63), VPy(nwl), ALAMPy(nwl),

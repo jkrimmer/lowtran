@@ -11,7 +11,7 @@ integer :: argc,i
 character(256) :: argv
 character(:), allocatable :: cmodel
 integer :: model,itype,iemsct,im
-integer :: iseasn,ird1
+integer :: ihaze,iseasn,ivulcn,icstl,icld,ird1
 integer :: iday,ro,isourc
 real :: angle,h1,range,v1,v2,dv
 logical :: verbose = .false.
@@ -60,7 +60,11 @@ select case (cmodel)
   iemsct=0! 0: transmittance model
   im=0 !0: normal operation (no custom user conditions)
 
+  ihaze=0 ! 0: no aerosol
   iseasn=0 ! 0: default for this type redirects to 1: spring/summer
+  ivulcn=0 ! 0: background stratospheric
+  icstl=0 ! not used
+  icld=0 ! no clouds
   IRD1=0 !0: not used
 
   ! ZMDL, P, T not used -- don't care about uninitialized value
@@ -78,7 +82,11 @@ select case (cmodel)
   iemsct=0 ! 0: transmittance model
   im=1 ! 1: horizontal path: p.42 of manual
 
+  ihaze=0 ! 0: no aerosol
   iseasn=0 !0: default for this type redirects to 1: spring/summer
+  ivulcn=0 ! 0: background stratospheric
+  icstl=0 ! not used
+  icld=0 ! no clouds
   ird1=1 !1: use card 2C2
 
 ! TODO M1-M6=0 to use JCHAR of card 2C.1 (p.22)
@@ -99,7 +107,11 @@ select case (cmodel)
   iemsct = 3 !3: directly transmitted solar irradiance, 2: scattered radiance,...
   im=0
 
+  ihaze=0 ! 0: no aerosol
   iseasn=0
+  ivulcn=0 ! 0: background stratospheric
+  icstl=0 ! not used
+  icld=0 ! no clouds
   ird1=0
 
   h1 = 0.05
@@ -119,7 +131,11 @@ select case (cmodel)
   iemsct=1 ! 1: single radiance model
   im=1 ! 1: horizontal path: p.42 of manual
 
+  ihaze=0 ! 0: no aerosol
   iseasn=0 !0: default for this type redirects to 1: spring/summer
+  ivulcn=0 ! 0: background stratospheric
+  icstl=0 ! not used
+  icld=0 ! no clouds
   ird1=1 !1: use card 2C2 (where atmospheric measurments are input for Model=0
 
 ! TODO M1-M6=0 to use JCHAR of card 2C.1 (p.22)
@@ -137,7 +153,7 @@ end select
 !-------- END command line parse ------------
 
 call LWTRN7(Python,nwl,V1,V2,DV,TXPy,VPy,ALAMPy,TRACEPy,UNIFPy, SUMAPy,irradpy,sumVVPy, &
-  MODEL,ITYPE,IEMSCT,IM, ISEASN,ML,IRD1, ZMDL,P,T,WMOL, H1,H2,ANGLE,range)
+  MODEL,ITYPE,IEMSCT,IM, IHAZE,ISEASN,IVULCN,ICSTL,ICLD,ML,IRD1, ZMDL,P,T,WMOL, H1,H2,ANGLE,range)
 !--- friendly output
 
 call testself()
